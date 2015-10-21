@@ -1,3 +1,7 @@
+bus_group:
+    resource: "@BUSGroupBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

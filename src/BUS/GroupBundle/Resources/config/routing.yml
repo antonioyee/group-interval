@@ -1,0 +1,3 @@
+bus_group_homepage:
+    path:     /group-by-interval
+    defaults: { _controller: BUSGroupBundle:Default:index }
