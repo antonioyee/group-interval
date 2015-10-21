@@ -1,3 +1,7 @@
 bus_group_homepage:
     path:     /group-by-interval
     defaults: { _controller: BUSGroupBundle:Default:index }
+
+ordenar_group:
+    path:     /group-by-interval/ordenar
+    defaults: { _controller: BUSGroupBundle:Default:ordenar }

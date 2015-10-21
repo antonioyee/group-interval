@@ -1,7 +1,38 @@
 {% extends 'plantilla.html.twig' %}
 
 {% block body %}
+    <form id="form-group" name="form-group" class="form-horizontal" action="#" method="POST" onsubmit="return(false)">
+        <div class="row">
+            <h1 class="lead">Entrada</h1>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-md-1 control-label" for="rango">Rango</label>
+					<div class="col-md-2">
+						<input type="text" id="rango" name="rango" class="form-control" />
+					</div>
+				</div>
+			</div>
+            <div class="col-sm-12">
+				<div class="form-group">
+					<label class="col-md-1 control-label" for="numero">Número</label>
+					<div class="col-md-2">
+						<input type="text" id="numero" name="numero" class="form-control" />
+					</div>
+                    <div class="col-md-2">
+                        <a id="btn-add-num" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar num</a>
+					</div>
+				</div>
+			</div>
 
-    <h1 class="lead">Hello Yee</h1>
+            <div id="contenedor-set" class="col-sm-12 well"></div>
 
+            <div class="col-sm-12 text-center">
+                <a id="btn-ordenar" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Ordenar</a>
+            </div>
+
+            <h1 class="lead">Resultado</h1>
+            <div id="contenedor-set-resultado" class="col-sm-12 well"></div>
+
+		</div>
+    </form>
 {% endblock %}
