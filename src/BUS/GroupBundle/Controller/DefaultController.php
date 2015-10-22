@@ -29,7 +29,9 @@ class DefaultController extends Controller{
 
             if ( $num == $num_elementos && is_numeric($rango) ) {
 
-                $resultado = array('group_ordenado' => $original, 'ordenado' => TRUE);
+                $ordenado = $this->ordenarGrupo($original, $num_elementos);
+
+                $resultado = array('group_ordenado' => $ordenado, 'ordenado' => TRUE);
             }else{
                 $resultado = array('mensaje' => 'throw InvalidArgumentException', 'ordenado' => FALSE);
             }
@@ -42,6 +44,27 @@ class DefaultController extends Controller{
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    private function ordenarGrupo($ordenado = array(), $num_elementos){
+        $menor      = NULL;
+        $comodin    = NULL;
+
+        for ($x=0; $x < $num_elementos; $x++) {
+            $menor = $x;
+
+            for ($y=$x+1; $y <= $num_elementos-1; $y++) {
+                if ( $ordenado[$y] < $ordenado[$menor] ) {
+                    $menor = $y;
+                }
+            }
+
+            $comodin            = $ordenado[$x];
+            $ordenado[$x]       = $ordenado[$menor];
+            $ordenado[$menor]   = $comodin;
+        }
+
+        return $ordenado;
     }
 
 }
