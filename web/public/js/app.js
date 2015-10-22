@@ -25,19 +25,40 @@ $(function(){
             var cadena_ordenada = '';
 
             if ( ordenado.ordenado == true ) {
-                var arreglo         = ordenado.group_ordenado;
+                var arreglo = ordenado.group_ordenado;
+
                 arreglo.forEach(function(campo, index) {
-                    if ( index == 0 ) {
-                        cadena_ordenada += campo;
+
+                    if ( campo.length == 1 ) {
+                        cadena_ordenada += ' [ ' + campo + ' ] ';
                     }else{
-                        cadena_ordenada += ', ' +campo;
+
+                        for (var sub = 0; sub < campo.length; sub++) {
+
+                            if ( sub == 0 ) {
+                                cadena_ordenada += ' [ ' + campo[sub];
+                            }else{
+                                if ( sub == campo.length-1 ) {
+                                    cadena_ordenada += ' ,  ' + campo[sub]  + ' ] ';
+                                }else{
+                                    cadena_ordenada += ' ,  ' + campo[sub];
+                                }
+                            }
+
+                        }
+
                     }
+
+                    if ( index < arreglo.length - 1 ) {
+                        cadena_ordenada += ' , ';
+                    }
+                    console.log(campo);
                 });
             }else{
                 cadena_ordenada = ordenado.mensaje;
             }
 
-            $('#contenedor-set-resultado').html('Set: [ ' + cadena_ordenada + ' ]');
+            $('#contenedor-set-resultado').html('{ ' + cadena_ordenada + ' }');
 		},'json');
 		return false;
     });
