@@ -94,6 +94,7 @@ class DefaultController extends Controller{
 
                     if ( $ordenado[$y] <=  $rangos[$x] ) {
                         array_push($sub_agrupados, $ordenado[$y]);
+                        $comodin = $rangos[$x];
                     }
 
                 }else{
@@ -107,18 +108,43 @@ class DefaultController extends Controller{
 
                         if ( $ordenado[$y] > $rangos[$x] && $ordenado[$y] <= $rangos[$x+1] ) {
                             array_push($sub_agrupados, $ordenado[$y]);
+                        }else{
+                            if ( $ordenado[$y] > $comodin && $ordenado[$y] <= $rangos[$x] && ! in_array($ordenado[$y], $sub_agrupados)
+                                &&  $this->_no_existe($agrupados, $ordenado[$y]) ) {
+                                array_push($sub_agrupados, $ordenado[$y]);
+                            }
                         }
 
                     }
                 }
             }
 
-            if ( count($sub_agrupados) > 0 ) { // valores sub-agrupados procede a agruparlos
+            if ( count($sub_agrupados) > 0 && ! in_array($sub_agrupados, $agrupados)) { // valores sub-agrupados procede a agruparlos
                 array_push($agrupados, $sub_agrupados);
             }
         }
 
         return $agrupados;
+    }
+
+    /**
+     * No exista en el elemento en el arreglo que ya se halla agrupado
+     */
+    private function _no_existe($ordenado = array(), $buscar){
+        for ($a=0; $a < count($ordenado) ; $a++) {
+            if ( count($ordenado[$a]) == 0 ) {
+                if ( $buscar == $ordenado[$a] ) {
+                    return FALSE;
+                }
+            }else{
+                for ($b=0; $b < count($ordenado[$a]); $b++) {
+                    if ( $buscar == $ordenado[$a][$b] ) {
+                        return FALSE;
+                    }
+                }
+            }
+        }
+        return TRUE;
     }
 
 }
