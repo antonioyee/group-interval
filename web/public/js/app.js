@@ -42,4 +42,12 @@ $(function(){
 		return false;
     });
 
+    $('#btn-limpiar').click(function () {
+        group = [];
+        $('#rango').val('');
+        $('#numero').val('');
+        $('#contenedor-set').html('');
+        $('#contenedor-set-resultado').html('');
+    });
+
 });
