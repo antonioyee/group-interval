@@ -29,11 +29,11 @@ class DefaultController extends Controller{
 
             if ( $num == $num_elementos && is_numeric($rango) ) {
 
-                $ordenado = $this->ordenarGrupo($original, $num_elementos);
+                $ordenado = $this->ordenarGrupo($original, $num_elementos); // ordenar grupo
 
-                $this->agruparOrdenamiento($rango, $ordenado, $num_elementos);
+                $agrupado = $this->agruparOrdenamiento($rango, $ordenado, $num_elementos); // agrupar grupos en sub-grupos
 
-                $resultado = array('group_ordenado' => $ordenado, 'ordenado' => TRUE);
+                $resultado = array('group_ordenado' => $agrupado, 'ordenado' => TRUE);
             }else{
                 $resultado = array('mensaje' => 'throw InvalidArgumentException', 'ordenado' => FALSE);
             }
@@ -73,65 +73,52 @@ class DefaultController extends Controller{
     }
 
     private function agruparOrdenamiento($rango, $ordenado = array(), $num_elementos){
-        $nvo = array();
-        $rangos = array();
+        $agrupados  = array();
+        $rangos     = array();
+        $min        = $ordenado[0];                 // valor minimo
+        $max        = $ordenado[$num_elementos-1];  // valor maximo
 
-        $min = $ordenado[0];
-        $max = $ordenado[$num_elementos-1];
-
-
-        for ($indice=$min; $indice <= $max; $indice++) {
-            if ( ($indice % $rango) == 0 ) {
+        for ($indice=$min; $indice <= $max; $indice++) {    // recorrer las cifras min hasta max
+            if ( ($indice % $rango) == 0 ) {                // determinar los multiplos del rango especificado
                 array_push($rangos, $indice);
             }
         }
 
-        print_r($rangos);
+        for ($x=0; $x <= count($rangos)-1; $x++) { // recorrer el arreglo con los multiplos del rango especificado
 
-        for ($x=0; $x <= count($rangos)-1; $x++) {
+            $sub_agrupados = array();
+            for ($y=0; $y < $num_elementos; $y++) { // recorrer el arreglo de los valores ha agrupar
+                                                    // determinar el rango el que estan y agruparlos
 
-            /*if ( $x == 0 ) {
-                echo '[' . $rangos[$x] . ']';
-            }else{
-                if ( $x == count($rangos)-1) {
-                    echo '[' . $rangos[$x] . ']';
-                }else{
-                    echo '[' . $rangos[$x] . ' ' . $rangos[$x+1] . ']';
-                }
-            }*/
-
-            $nvo1 = array();
-            for ($y=0; $y < $num_elementos; $y++) {
-
-                if ( $x == 0 ) {
+                if ( $x == 0 ) { // primer / menor
 
                     if ( $ordenado[$y] <=  $rangos[$x] ) {
-                        array_push($nvo1, $ordenado[$y]);
+                        array_push($sub_agrupados, $ordenado[$y]);
                     }
 
                 }else{
-                    if ( $x == count($rangos)-1) {
+                    if ( $x == count($rangos)-1) { // max / ultimo
 
                         if ( $ordenado[$y] >  $rangos[$x] ) {
-                            array_push($nvo1, $ordenado[$y]);
+                            array_push($sub_agrupados, $ordenado[$y]);
                         }
 
-                    }else{
+                    }else{ // valores intermedios
 
-                        if ( $ordenado[$y] >  $rangos[$x] && $ordenado[$y] <= $rangos[$x+1] ) {
-                            array_push($nvo1, $ordenado[$y]);
+                        if ( $ordenado[$y] > $rangos[$x] && $ordenado[$y] <= $rangos[$x+1] ) {
+                            array_push($sub_agrupados, $ordenado[$y]);
                         }
 
                     }
                 }
             }
 
-            if ( count($nvo1) > 0 ) {
-                array_push($nvo, $nvo1);
+            if ( count($sub_agrupados) > 0 ) { // valores sub-agrupados procede a agruparlos
+                array_push($agrupados, $sub_agrupados);
             }
-
         }
-        print_r($nvo);
+
+        return $agrupados;
     }
 
 }
