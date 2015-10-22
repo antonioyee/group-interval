@@ -25,6 +25,7 @@ $(function(){
             var cadena_ordenada = '';
 
             if ( ordenado.ordenado == true ) {
+                console.table(ordenado.group_ordenado);
                 var arreglo = ordenado.group_ordenado;
 
                 arreglo.forEach(function(campo, index) {
